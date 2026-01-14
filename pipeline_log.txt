@@ -1,0 +1,18 @@
+Starting pipeline run at 2025/12/12 15:14:31.25 
+Fetched 5 jobs.
+Processed 315 records.
+C:\Users\evazv\recruitment-pipeline\load_to_bronze.py:22: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  df_combined = pd.concat([df_current, df_hist]).drop_duplicates(subset=['job_id'])
+Loaded to Bronze.
+Starting pipeline run at 2025/12/12 19:56:53.57 
+Fetched 5 jobs.
+Processed 315 records.
+C:\Users\evazv\recruitment-pipeline\load_to_bronze.py:22: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  df_combined = pd.concat([df_current, df_hist]).drop_duplicates(subset=['job_id'])
+Loaded to Bronze.
+Starting pipeline run at 2025/12/12 19:58:03.98 
+Fetched 5 jobs.
+Processed 315 records.
+C:\Users\evazv\recruitment-pipeline\load_to_bronze.py:22: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  df_combined = pd.concat([df_current, df_hist]).drop_duplicates(subset=['job_id'])
+Loaded to Bronze.

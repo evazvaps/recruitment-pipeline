@@ -1,0 +1,170 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    description: Raw ingested data from Greenhouse API and historical CSV
+    tables:
+      - name: jobs_raw
+        description: Raw job data with potential quality issues
+        columns:
+          - name: job_id
+            description: Unique job identifier
+            tests:
+              - not_null
+          - name: internal_job_id
+            description: Internal job ID
+          - name: absolute_url
+            description: Job URL
+          - name: title
+            description: Job title
+          - name: department
+            description: Job department (e.g., Marketing, Sales)
+          - name: location
+            description: Job location (e.g., South Africa, Netherlands)
+          - name: company_name
+            description: Company name (OfferZen)
+          - name: open_date
+            description: Job open date
+          - name: close_date
+            description: Job close date (null if open)
+          - name: ingested_at
+            description: Ingestion timestamp
+
+models:
+  - name: jobs_silver
+    description: Cleaned and transformed job data in Silver layer
+    columns:
+      - name: job_id
+        description: Unique job identifier
+        tests:
+          - unique
+          - not_null
+      - name: internal_job_id
+        description: Internal job ID
+      - name: absolute_url
+        description: Job URL
+      - name: title
+        description: Job title
+      - name: department
+        description: Job department
+      - name: location
+        description: Job location
+      - name: company_name
+        description: Company name
+      - name: open_date
+        description: Job open date
+      - name: close_date
+        description: Job close date
+      - name: ingested_at
+        description: Ingestion timestamp
+      - name: time_to_fill_days
+        description: Calculated days to fill job (uses current date if open)
+
+  - name: dim_company
+    description: Dimension for company names
+    columns:
+      - name: company_id
+        description: Surrogate key for company
+        tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: Standardized company name
+
+  - name: dim_date
+    description: Standard date dimension for open and close dates
+    columns:
+      - name: date_id
+        description: Surrogate key (YYYYMMDD)
+        tests:
+          - unique
+          - not_null
+      - name: date_full
+        description: Full date
+      - name: calendar_year
+        description: Calendar year
+      - name: calendar_quarter
+        description: Calendar quarter
+      - name: calendar_month
+        description: Calendar month number
+      - name: month_name
+        description: Month name
+      - name: calendar_week
+        description: Calendar week number
+      - name: calendar_day
+        description: Day of month
+      - name: day_name
+        description: Day name
+      - name: day_of_year
+        description: Day of year
+      - name: is_weekend
+        description: Is weekend (true/false)
+      - name: is_weekday
+        description: Is weekday (true/false)
+      - name: fiscal_year
+        description: Fiscal year
+      - name: fiscal_quarter
+        description: Fiscal quarter
+
+  - name: dim_department
+    description: Dimension for departments (Marketing, Sales, etc.)
+    columns:
+      - name: dept_id
+        description: Surrogate key for department
+        tests:
+          - unique
+          - not_null
+      - name: dept_name
+        description: Standardized department name
+
+  - name: dim_location
+    description: Dimension for locations (South Africa, Netherlands)
+    columns:
+      - name: loc_id
+        description: Surrogate key for location
+        tests:
+          - unique
+          - not_null
+      - name: loc_name
+        description: Standardized location name
+
+  - name: dim_title
+    description: Dimension for job titles
+    columns:
+      - name: title_id
+        description: Surrogate key for title
+        tests:
+          - unique
+          - not_null
+      - name: title_name
+        description: Standardized job title
+
+  - name: fact_jobs
+    description: Fact table for job analytics with surrogate keys and metrics
+    columns:
+      - name: job_id
+        description: Job identifier (fact grain)
+        tests:
+          - unique
+          - not_null
+      - name: internal_job_id
+        description: Internal job ID
+      - name: title_id
+        description: Foreign key to dim_title
+      - name: dept_id
+        description: Foreign key to dim_department
+      - name: loc_id
+        description: Foreign key to dim_location
+      - name: company_id
+        description: Foreign key to dim_company
+      - name: open_date_id
+        description: Foreign key to dim_date for open date
+      - name: close_date_id
+        description: Foreign key to dim_date for close date
+      - name: job_status
+        description: Job status (Open/Closed)
+      - name: time_to_fill_days
+        description: Days to fill (uses current if open)
+      - name: duration_days
+        description: Actual duration if closed

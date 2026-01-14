@@ -1,0 +1,12 @@
+recruitment_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      threads: 1
+      host: offerzendb.cez6u4g6kc42.us-east-1.rds.amazonaws.com
+      port: 5432
+      user: OfferZen
+      pass: OfferZen123
+      dbname: postgres
+      

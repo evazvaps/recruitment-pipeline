@@ -1,0 +1,20 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data and logs
+logs/
+*.xlsx
+*.csv
+*.log
+
+# Env and secrets
+.env
+*.db  # If local DB files
+
+# DBT artifacts
+recruitment_dbt/target/
+recruitment_dbt/logs/
