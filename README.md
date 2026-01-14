@@ -2,6 +2,8 @@ text# Recruitment Data Pipeline
 
 End-to-end pipeline for Greenhouse job analytics using Python, RDS Postgres, DBT.
 
+src folder: Contains Python scripts (e.g., ingest_api.py, load_to_bronze.py, process_historical.py).
+
  Setup
 =======
 1. Install Python 3.14, create venv, pip install requirements.txt.
